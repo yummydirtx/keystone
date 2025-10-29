@@ -1,0 +1,33 @@
+{
+  "name": "@my/ui",
+  "version": "0.0.1",
+  "sideEffects": [
+    "*.css"
+  ],
+  "private": true,
+  "types": "./src",
+  "main": "src/index.tsx",
+  "module:jsx": "src",
+  "files": [
+    "types",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tamagui-build --skip-types",
+    "watch": "tamagui-build --skip-types --watch"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
+  "dependencies": {
+    "@my/config": "0.0.1",
+    "@tamagui/toast": "^1.135.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tamagui": "^1.135.2"
+  },
+  "devDependencies": {
+    "@tamagui/build": "^1.135.2"
+  }
+}

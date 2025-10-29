@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "b090b440-8f5a-45ca-90d0-e90e0476feee"
+      }
+    },
+    "plugins": ["expo-tracking-transparency"]
+  }
+}

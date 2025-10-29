@@ -1,0 +1,90 @@
+{
+  "expo": {
+    "name": "Keystone",
+    "slug": "Keystone",
+    "scheme": "keystone",
+    "version": "3.2.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#eef8c7"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thejunkyard.keystone",
+      "buildNumber": "1",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "entitlements": {
+        "com.apple.developer.applesignin": ["Default"]
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to allow you to select and upload profile pictures and receipts.",
+        "NSCameraUsageDescription": "This app needs access to your camera to take photos of receipts and documents for expense tracking. For example, you can photograph a restaurant receipt to automatically extract the amount, date, and vendor information using our AI-powered receipt scanner.",
+        "NSUserNotificationUsageDescription": "This app would like to send you notifications for approvals, shared categories, and updates.",
+        "UIBackgroundModes": ["remote-notification"],
+        "NSUserTrackingUsageDescription": "This app uses your data to provide personalized expense tracking insights and relevant notifications to improve your experience."
+      },
+      "icon": "./assets/AppIcon.icon",
+      "appleTeamId": "NVRV5Y4RMQ"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#EEF8C7"
+      },
+      "package": "com.thejunkyard.keystone",
+      "googleServicesFile": "./google-services.json",
+      "permissions": ["com.google.android.gms.permission.AD_ID"]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "@react-native-firebase/app",
+      "./plugins/withFirebaseAuthSwift.js",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.178901875479-190q1tpjtsom7hb0na0d5adqj7gt3o23"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static",
+            "buildReactNativeFromSource": true
+          }
+        }
+      ],
+      "expo-notifications",
+      "expo-tracking-transparency"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "router": {
+        "origin": false,
+        "root": "./app"
+      },
+      "eas": {
+        "projectId": "90a5f465-34b0-4626-a2a1-4af520dd22d4"
+      }
+    },
+    "owner": "yummydirt"
+  }
+}

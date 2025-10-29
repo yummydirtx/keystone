@@ -1,0 +1,94 @@
+{
+  "name": "Keystone: Shared Budgets and Reimbursements",
+  "short_name": "Keystone",
+  "description": "Streamline your team's expenses with Keystone. Manage shared budgets, track reimbursements, and simplify expense reporting for your organization.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon-precomposed.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "id": "keystone-expense-tracker",
+  "related_applications": [
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/us/app/keystone-shared-budgets/id6747334458",
+      "id": "6747334458"
+    }
+  ],
+  "prefer_related_applications": true,
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "screenshots": [
+    {
+      "src": "/screenshots/mobile-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Expense submission view"
+    },
+    {
+      "src": "/screenshots/mobile-2.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Category management"
+    },
+    {
+      "src": "/screenshots/mobile-3.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Budget overview"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Submit Expense",
+      "short_name": "Submit",
+      "description": "Quickly submit a new expense",
+      "url": "/expenses/new",
+      "icons": [
+        {
+          "src": "/apple-touch-icon.png",
+          "sizes": "180x180",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "View Reports",
+      "short_name": "Reports",
+      "description": "View expense reports",
+      "url": "/reports",
+      "icons": [
+        {
+          "src": "/apple-touch-icon.png",
+          "sizes": "180x180",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

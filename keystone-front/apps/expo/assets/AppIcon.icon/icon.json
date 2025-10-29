@@ -1,0 +1,117 @@
+{
+  "fill": {
+    "automatic-gradient": "display-p3:0.96859,1.00000,0.82611,1.00000"
+  },
+  "groups": [
+    {
+      "blur-material-specializations": [
+        {
+          "value": null
+        },
+        {
+          "appearance": "dark",
+          "value": null
+        }
+      ],
+      "layers": [
+        {
+          "hidden-specializations": [
+            {
+              "value": false
+            },
+            {
+              "appearance": "dark",
+              "value": true
+            }
+          ],
+          "image-name": "left.png",
+          "name": "left"
+        },
+        {
+          "hidden-specializations": [
+            {
+              "value": false
+            },
+            {
+              "appearance": "dark",
+              "value": true
+            }
+          ],
+          "image-name": "right.png",
+          "name": "right"
+        },
+        {
+          "glass-specializations": [
+            {
+              "value": true
+            },
+            {
+              "appearance": "dark",
+              "value": false
+            }
+          ],
+          "hidden": false,
+          "image-name": "rock.png",
+          "name": "rock"
+        },
+        {
+          "hidden-specializations": [
+            {
+              "value": true
+            },
+            {
+              "appearance": "dark",
+              "value": false
+            }
+          ],
+          "image-name": "grayletter.png",
+          "name": "grayletter"
+        }
+      ],
+      "lighting": "individual",
+      "shadow-specializations": [
+        {
+          "value": {
+            "kind": "layer-color",
+            "opacity": 0.25
+          }
+        },
+        {
+          "appearance": "dark",
+          "value": {
+            "kind": "layer-color",
+            "opacity": 0.25
+          }
+        }
+      ],
+      "specular-specializations": [
+        {
+          "value": true
+        },
+        {
+          "appearance": "dark",
+          "value": true
+        }
+      ],
+      "translucency-specializations": [
+        {
+          "value": {
+            "enabled": true,
+            "value": 0.5
+          }
+        },
+        {
+          "appearance": "dark",
+          "value": {
+            "enabled": true,
+            "value": 0.5
+          }
+        }
+      ]
+    }
+  ],
+  "supported-platforms": {
+    "circles": ["watchOS"],
+    "squares": "shared"
+  }
+}

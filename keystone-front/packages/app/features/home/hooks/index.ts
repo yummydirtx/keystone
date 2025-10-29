@@ -1,0 +1,1 @@
+// Focus-based refresh removed

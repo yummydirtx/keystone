@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+When editing or creating files, remember that this is an Expo and Next.js monorepo, so if any code only works with native, there should be a .web.tsx version of that file that uses a web implementation.
