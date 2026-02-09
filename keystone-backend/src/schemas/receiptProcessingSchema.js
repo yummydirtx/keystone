@@ -11,9 +11,9 @@ const receiptSchema = {
     },
     transaction_date: {
       type: 'string',
+      nullable: true,
       description:
-        'The transaction date from the receipt in ISO 8601 format (YYYY-MM-DD). Look for purchase date, transaction date, or any date that represents when the transaction occurred (not printed date or other dates). If no transaction date is found, set to null.',
-      format: 'date'
+        'The transaction date from the receipt. If the receipt shows a complete date with year (e.g., "June 13, 2024"), return it in ISO 8601 format (YYYY-MM-DD). If the receipt only shows month and day without a year (e.g., "June 13" or "06/13"), return it as "MM-DD" format (e.g., "06-13"). CRITICAL: Do NOT guess or infer the year if it is not explicitly shown on the receipt. If no date information is found at all, you MUST set this to null (not a string). Return null, not a made-up date.'
     },
     transaction_summary: {
       type: 'string',

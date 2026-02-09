@@ -24,6 +24,7 @@ app.use(
   cors({
     origin: [
       'https://gokeystone.org',
+      'https://keystone-front-next.vercel.app',
       'https://alex.dev.gokeystone.org', // Dev routes - remove this later
       'https://marcus.dev.gokeystone.org'
     ]

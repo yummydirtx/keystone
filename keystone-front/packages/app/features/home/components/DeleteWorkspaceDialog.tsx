@@ -1,4 +1,4 @@
-import { Button, XStack, Spinner, Dialog, Paragraph } from '@my/ui'
+import { Button, XStack, Spinner, Dialog, Paragraph, useToastController } from '@my/ui'
 import React, { useState } from 'react'
 import { useDeleteReport } from '../../../utils/queries.optimized'
 import type { Workspace } from '../../../types'
@@ -17,6 +17,7 @@ export const DeleteWorkspaceDialog = ({
   workspacesToDelete,
 }: DeleteWorkspaceDialogProps) => {
   const { mutateAsync: deleteReport, isPending: isDeleting } = useDeleteReport()
+  const toast = useToastController()
 
   const handleDeleteWorkspaces = async () => {
     try {
@@ -26,7 +27,9 @@ export const DeleteWorkspaceDialog = ({
       onWorkspaceDeleted?.()
     } catch (error) {
       console.error('Failed to delete workspaces:', error)
-      // TODO: Show error toast/notification
+      toast.show('Failed to delete workspaces', {
+        message: 'An error occurred. Please try again.',
+      })
     }
   }
 

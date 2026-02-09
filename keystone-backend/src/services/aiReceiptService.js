@@ -31,8 +31,9 @@ class AIReceiptService {
       // Initialize Vertex AI with explicit credentials
       this.vertexAI = new VertexAI({
         project: projectId,
-        location: 'us-central1', // Default location, can be changed as needed
-        keyFilename: serviceAccountPath // Use the same service account as Firebase
+        location: 'us-central1',
+        apiEndpoint: 'aiplatform.googleapis.com', // Explicitly set global endpoint for Gemini 3
+        keyFilename: serviceAccountPath
       });
 
       console.log('Vertex AI initialized successfully with project:', projectId);
@@ -60,7 +61,7 @@ class AIReceiptService {
     try {
       // Get the generative model with structured output
       const generativeModel = this.vertexAI.getGenerativeModel({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         generationConfig: {
           responseMimeType: 'application/json',
           responseSchema: receiptSchema
@@ -69,7 +70,7 @@ class AIReceiptService {
 
       // Define the prompt
       const prompt =
-        'Extract the total amount, transaction date, a brief transaction summary (like "Groceries at Store" or "Gas at Station"), and item descriptions/prices from this receipt image/PDF. For the transaction date, look for purchase date, transaction date, or any date that represents when the transaction occurred (not printed date or other dates). Return the date in ISO 8601 format (YYYY-MM-DD). If no transaction date is found, set it to null. Include things like sales tax, shipping, and fees as an item if present.';
+        'Extract the total amount, transaction date, a brief transaction summary (like "Groceries at Store" or "Gas at Station"), and item descriptions/prices from this receipt image/PDF. For the transaction date, look ONLY for dates that represent when the transaction occurred (purchase date, transaction date, sale date). IGNORE printed dates, expiration dates, or other unrelated dates. If you can see a complete date with year (e.g., "June 13, 2024" or "06/13/2024"), return it in ISO 8601 format (YYYY-MM-DD). If you can only see the month and day without a year (e.g., "June 13" or "06/13"), return it as "MM-DD" format (e.g., "06-13"). If there is NO date visible on the receipt at all, you MUST return null for transaction_date - do NOT make up, guess, or hallucinate a date. It is better to return null than to return an incorrect date. Include things like sales tax, shipping, and fees as an item if present. Some more specific examples of brief transaction summaries: If it is a receipt from CVS or Walgreens, it should assume "Prescriptions from Walgreens" (or CVS) unless the receipt shows non-pharmacy items. For a receipt from KYLE HARWICK LMFT a good summary would be "Therapy at Kyle Harwick LMFT". For purchases from Amazon, like for example, a bird feeder, a good summary would be "Bird feeder from Amazon". For purchases from GradGuard a good summary would be "Renters Insurance from GradGuard". For purchases from a gas station where it is unclear what the purchase was for, "Gas at *station name*" is a good fallback summary.';
 
       // Create the request
       const request = {
@@ -142,8 +143,8 @@ class AIReceiptService {
 
   /**
    * Parse transaction date from AI response
-   * @param {string|null} dateString - Date string from AI
-   * @returns {string|null} - ISO date string or null
+   * @param {string|null} dateString - Date string from AI (can be YYYY-MM-DD or MM-DD)
+   * @returns {string|null} - ISO date string with current year if needed, or null
    */
   parseTransactionDate(dateString) {
     if (!dateString) {
@@ -151,19 +152,61 @@ class AIReceiptService {
     }
 
     try {
-      // If it's already in ISO format, validate and return
+      const currentYear = new Date().getFullYear();
+
+      // If it's already in full ISO format (YYYY-MM-DD), validate and return
       if (typeof dateString === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
         const date = new Date(dateString + 'T00:00:00.000Z');
         if (!isNaN(date.getTime())) {
-          return dateString;
+          // Validate that the year is reasonable (between 2000 and current year + 1)
+          const year = parseInt(dateString.split('-')[0], 10);
+          if (year >= 2000 && year <= currentYear + 1) {
+            return dateString;
+          } else {
+            console.warn('Date year out of reasonable range:', dateString);
+            return null;
+          }
         }
       }
 
-      // Try to parse various date formats
-      const date = new Date(dateString);
-      if (!isNaN(date.getTime())) {
-        // Return in ISO format (YYYY-MM-DD)
-        return date.toISOString().split('T')[0];
+      // If it's in MM-DD format (AI found month/day but no year), add current year
+      if (typeof dateString === 'string' && /^\d{2}-\d{2}$/.test(dateString)) {
+        const [month, day] = dateString.split('-');
+        const fullDate = `${currentYear}-${month}-${day}`;
+
+        // Validate the date is valid
+        const date = new Date(fullDate + 'T00:00:00.000Z');
+        if (!isNaN(date.getTime())) {
+          console.log(`AI provided partial date ${dateString}, using current year: ${fullDate}`);
+          return fullDate;
+        } else {
+          console.warn('Invalid partial date:', dateString);
+          return null;
+        }
+      }
+
+      // Try to parse other common formats that might include the year
+      // But only accept if they have a 4-digit year explicitly
+      const hasFourDigitYear = /\d{4}/.test(dateString);
+
+      if (hasFourDigitYear) {
+        const date = new Date(dateString);
+        if (!isNaN(date.getTime())) {
+          const isoDate = date.toISOString().split('T')[0];
+          const year = date.getFullYear();
+
+          if (year >= 2000 && year <= currentYear + 1) {
+            return isoDate;
+          } else {
+            console.warn('Parsed date year out of reasonable range:', dateString, 'parsed as:', isoDate);
+            return null;
+          }
+        }
+      } else {
+        // Date string doesn't have a 4-digit year and isn't in MM-DD format
+        // This might be something like "June 13" or "13 Jun" that the AI didn't convert
+        console.warn('Date string missing year and not in MM-DD format:', dateString);
+        return null;
       }
 
       return null;

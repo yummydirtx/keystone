@@ -168,10 +168,12 @@ const updateExpenseStatus = async (req, res) => {
         {
           expenseId: result.updatedExpense.id,
           status: result.updatedExpense.status,
+          oldStatus: expense.status,
           description: result.updatedExpense.description,
           categoryName: result.updatedExpense.category?.name,
           reportId: result.updatedExpense.report?.id,
-          reviewerName
+          reviewerName,
+          reviewerUserId: user.id
         }
       );
     } catch (notifyErr) {

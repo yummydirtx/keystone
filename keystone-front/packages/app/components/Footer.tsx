@@ -1,5 +1,5 @@
 import React from 'react'
-import { YStack, XStack, Paragraph, Separator } from '@my/ui'
+import { YStack, XStack, Paragraph, Separator, Anchor } from '@my/ui'
 import { Platform } from 'react-native'
 
 export function Footer() {
@@ -33,22 +33,26 @@ export function Footer() {
           vertical
           height="$1"
         />
-        <Paragraph
+        <Anchor
+          href="/privacy"
           size="$2"
           color="$color10"
+          hoverStyle={{ color: '$color12' }}
         >
-          Built with Tamagui & Next.js
-        </Paragraph>
+          Privacy Policy
+        </Anchor>
         <Separator
           vertical
           height="$1"
         />
-        <Paragraph
+        <Anchor
+          href="/terms"
           size="$2"
           color="$color10"
+          hoverStyle={{ color: '$color12' }}
         >
-          Shared Budgets & Reimbursements
-        </Paragraph>
+          Terms and Conditions
+        </Anchor>
       </XStack>
     </YStack>
   )

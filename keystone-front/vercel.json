@@ -1,0 +1,4 @@
+{
+  "buildCommand": "yarn install && yarn web:prod",
+  "installCommand": "yarn set version 4 && yarn install"
+}

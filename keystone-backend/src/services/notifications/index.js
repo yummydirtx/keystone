@@ -305,6 +305,14 @@ async function notifySubmitterOnStatusChange(submitterUserId, context) {
     return;
   }
 
+  // If status is APPROVED, only notify if it was previously PENDING_REVIEW or PENDING_ADMIN
+  if (context.status === 'APPROVED') {
+    const validPreviousStatuses = ['PENDING_REVIEW', 'PENDING_ADMIN'];
+    if (!context.oldStatus || !validPreviousStatuses.includes(context.oldStatus)) {
+      return;
+    }
+  }
+
   // If the reviewer is the submitter (self-approval/denial), do not notify
   if (context.reviewerUserId && context.reviewerUserId === submitterUserId) {
     return;

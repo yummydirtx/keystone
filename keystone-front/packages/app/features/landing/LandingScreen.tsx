@@ -32,6 +32,7 @@ import { useAuth } from '../../provider/AuthProvider'
 import { NavigationBar } from '../../components/NavigationBar.web'
 import { RefreshableScrollView } from '../../components/RefreshableScrollView'
 import { RainbowKeystoneAI } from '../expense/components/RainbowKeystoneAI'
+import { Footer } from '../../components/Footer'
 
 /**
  * Modern landing page for Keystone - AI-powered expense tracking and reporting platform
@@ -531,6 +532,9 @@ export function LandingScreen() {
               )}
             </YStack>
           </YStack>
+
+          {/* Footer */}
+          <Footer />
         </YStack>
       </RefreshableScrollView>
     </>

@@ -76,7 +76,8 @@ const grantPermission = async (req, res) => {
         targetUserId = targetUser?.id || null;
       }
 
-      if (targetUserId) {
+      // Only notify if we are not notifying ourselves
+      if (targetUserId && targetUserId !== currentUser.id) {
         // Fetch some context for better message
         const category = await prisma.category.findUnique({
           where: { id: categoryIdInt },

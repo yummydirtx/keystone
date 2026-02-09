@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   Sheet,
-  Adapt,
   Button,
   H2,
   Paragraph,
@@ -12,7 +11,6 @@ import {
   useToastController,
 } from '@my/ui'
 import { X, Settings, Check } from '@tamagui/lucide-icons'
-import { Platform } from 'react-native'
 import type { Category } from '../../../types'
 
 interface CategoryOptionsSheetProps {
@@ -106,45 +104,37 @@ export function CategoryOptionsSheet({
         justify="flex-start"
         gap="$5"
       >
-        <Adapt
-          when="sm"
-          platform="touch"
-        >
-          <Sheet.ScrollView>
-            <Adapt.Contents />
-          </Sheet.ScrollView>
-        </Adapt>
-
-        {/* Header */}
-        <XStack
-          justify="space-between"
-          items="center"
-        >
+        <Sheet.ScrollView>
+          {/* Header */}
           <XStack
+            justify="space-between"
             items="center"
-            gap="$2"
           >
-            <Settings size={20} />
-            <H2>Category Options</H2>
+            <XStack
+              items="center"
+              gap="$2"
+            >
+              <Settings size={20} />
+              <H2>Category Options</H2>
+            </XStack>
+            <Button
+              size="$3"
+              circular
+              icon={X}
+              onPress={() => onOpenChange(false)}
+              chromeless
+            />
           </XStack>
-          <Button
-            size="$3"
-            circular
-            icon={X}
-            onPress={() => onOpenChange(false)}
-            chromeless
-          />
-        </XStack>
 
-        {category && (
-          <Paragraph color="$color10">Configure settings for "{category.name}"</Paragraph>
-        )}
+          {category && (
+            <Paragraph color="$color10">Configure settings for "{category.name}"</Paragraph>
+          )}
 
-        {/* Options List */}
-        <YStack
-          gap="$4"
-          flex={1}
-        >
+          {/* Options List */}
+          <YStack
+            gap="$4"
+            flex={1}
+          >
           {/* Receipt Requirement */}
           <XStack
             justify="space-between"
@@ -278,6 +268,7 @@ export function CategoryOptionsSheet({
             {saving ? 'Saving...' : 'Save Options'}
           </Button>
         </XStack>
+        </Sheet.ScrollView>
       </Sheet.Frame>
     </Sheet>
   )

@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import { ScrollView, YStack, H1, H2, H3, Paragraph, Separator } from '@my/ui'
 import { RefreshableScrollView } from '../../components/RefreshableScrollView'
+import { NavigationBar } from '../../components/NavigationBar.web'
+import { Footer } from '../../components/Footer'
 
 export function PrivacyScreen() {
   const [refreshing, setRefreshing] = useState(false)
@@ -17,18 +19,21 @@ export function PrivacyScreen() {
   }, [])
 
   return (
-    <RefreshableScrollView
-      flex={1}
-      bg="$background"
-      refreshing={refreshing}
-      onRefresh={handleRefresh}
-    >
-      <YStack
-        p="$4"
-        maxW={800}
-        justify="center"
-        gap="$4"
+    <>
+      <NavigationBar onMenuPress={() => {}} />
+      <RefreshableScrollView
+        flex={1}
+        bg="$background"
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
       >
+        <YStack
+          p="$4"
+          pt="$12"
+          maxW={800}
+          als="center"
+          gap="$4"
+        >
         <H1
           color="$color"
           items="center"
@@ -444,7 +449,10 @@ export function PrivacyScreen() {
             the Keystone expense tracking application.
           </Paragraph>
         </YStack>
+
+        <Footer />
       </YStack>
     </RefreshableScrollView>
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, XStack, Spinner, Dialog, Input, Fieldset, Label } from '@my/ui'
+import { Button, XStack, Spinner, Dialog, Input, Fieldset, Label, useToastController } from '@my/ui'
 import React, { useState, useEffect } from 'react'
 import { useUpdateReport, useUpdateCategory, useCategories } from '../../../utils/queries.optimized'
 import type { Workspace } from '../../../types'
@@ -16,6 +16,7 @@ export const RenameWorkspaceDialog = ({
   onWorkspaceRenamed,
   workspaceToRename,
 }: RenameWorkspaceDialogProps) => {
+  const toast = useToastController()
   const [newWorkspaceName, setNewWorkspaceName] = useState('')
   const { mutateAsync: updateReport, isPending: isUpdatingWorkspace } = useUpdateReport()
   const { mutateAsync: updateCategory } = useUpdateCategory()
@@ -70,7 +71,9 @@ export const RenameWorkspaceDialog = ({
       onWorkspaceRenamed?.()
     } catch (error) {
       console.error('Failed to rename workspace:', error)
-      // TODO: Show error toast/notification
+      toast.show('Failed to rename workspace', {
+        message: error instanceof Error ? error.message : 'An unknown error occurred',
+      })
     }
   }
 
